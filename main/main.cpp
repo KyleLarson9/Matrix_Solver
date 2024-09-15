@@ -10,14 +10,13 @@
 using namespace std;
 
 int main() {
-	 CreateMatrix matrix;
 
-	 matrix.setMatrixSize(15, 15);
-	 matrix.generateRandomMatrix();
-	 matrix.printRandomMatrix();
+	CreateMatrix createMatrix;
 
-
-	 return  0;
+	createMatrix.setMatrixSize(5, 5);
+	createMatrix.generateRandomMatrix();
+	createMatrix.printRandomMatrix();
+	return  0;
 
 }
 
