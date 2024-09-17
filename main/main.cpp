@@ -13,9 +13,11 @@ int main() {
 
 	CreateMatrix createMatrix;
 
-	createMatrix.setMatrixSize(5, 5);
-	createMatrix.generateRandomMatrix();
-	createMatrix.printRandomMatrix();
+	createMatrix.setMatrixSize(2, 3);
+	createMatrix.createCustomMatrix();
+	createMatrix.printMatrix();
+
+
 	return  0;
 
 }

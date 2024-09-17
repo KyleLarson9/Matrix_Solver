@@ -35,12 +35,36 @@ void CreateMatrix::generateRandomMatrix() {
 
 	for(int i = 0; i < rows; i++) {
 		for(int j = 0; j < columns; j++) {
-			matrix[i][j] = rand() % 100;
+			matrix[i][j] = rand() % 10;
 		}
 	}
 }
 
-void CreateMatrix::printRandomMatrix() {
+void CreateMatrix::createCustomMatrix() {
+
+	checkIfNull();
+
+	for(int i = 0; i < rows; i++) {
+		for(int j = 0; j < columns; j++) {
+
+			int currentElementValue;
+
+			if(j == columns - 1) {
+				cout << "Enter solution for equation " << i + 1 << endl;
+				cin >> currentElementValue;
+			} else {
+				cout << "Enter element " << "(" << i << ", " << j << ")" << endl;
+				cin >> currentElementValue;
+			}
+
+			matrix[i][j] = currentElementValue;
+
+		}
+	}
+
+}
+
+void CreateMatrix::printMatrix() {
 
 	checkIfNull();
 

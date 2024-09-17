@@ -18,8 +18,8 @@ public:
 
     void setMatrixSize(int r, int c); // Sets the size of the matrix
     void generateRandomMatrix(); // Fills the matrix with random values
-    void createMatrix();
-    void printRandomMatrix(); // Prints the matrix
+    void createCustomMatrix();
+    void printMatrix(); // Prints the matrix
     void getSolutionsVector(); // the last integer of each row
     int** getMatrix();
 private:
