@@ -11,6 +11,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <stdlib.h>
+
 class CreateMatrix {
 public:
     CreateMatrix();  // Constructor
@@ -22,6 +23,9 @@ public:
     void printMatrix(); // Prints the matrix
     void getSolutionsVector(); // the last integer of each row
     int** getMatrix();
+    int getRows();
+    int getColumns();
+
 private:
     int rows; // Number of rows in the matrix
     int columns; // Number of columns in the matrix

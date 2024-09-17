@@ -98,3 +98,17 @@ void CreateMatrix::checkIfNull() {
 		cerr << "Matrix not initialized" << endl;
 	}
 }
+
+// getters and setters
+
+int** CreateMatrix::getMatrix() {
+	return matrix;
+}
+
+int CreateMatrix::getRows() {
+	return rows;
+}
+
+int CreateMatrix::getColumns() {
+	return columns;
+}

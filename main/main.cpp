@@ -6,17 +6,19 @@
  */
 #include <iostream>
 #include "createMatrix.h"
+#include "gaussianElimination.h"
 
 using namespace std;
 
 int main() {
 
 	CreateMatrix createMatrix;
+	GaussianElimination gaussianElimination;
 
 	createMatrix.setMatrixSize(2, 3);
 	createMatrix.createCustomMatrix();
-	createMatrix.printMatrix();
 
+	gaussianElimination.printMatrix(createMatrix.getMatrix(), createMatrix.getRows(), createMatrix.getColumns());
 
 	return  0;
 
