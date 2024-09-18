@@ -16,14 +16,16 @@ public:
 
 	void solvingAlgorithm();
 	void printMatrix(int** matrix, int rows, int columns);
+	void multiplyRowByScalar(int** matrix, int rows, int columns, int row, int scalar);
+	void interchangeRows(int** matrix, int rows, int columns, int rowA, int rowB);
+	void addTwoRows(int** matrix, int rows, int columns, int rowA, int rowB);
+
+	void assignPivot();
 
 private:
 
-	void interchangeRows(int** matrix, int rowA, int rowB);
-	void multiplyRowByScalar(int** matrix, int row, int scalar);
-	void addRows(int** matrix, int rowA, int rowB);
-
 	void checkZeros();
+
 };
 
 
