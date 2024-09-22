@@ -14,17 +14,19 @@ class GaussianElimination {
 
 public:
 
-	void solvingAlgorithm();
+	void solvingAlgorithm(int** matrix, int rows, int columns);
 	void printMatrix(int** matrix, int rows, int columns);
+
+private:
+
+	// elementary row operation functions
 	void multiplyRowByScalar(int** matrix, int rows, int columns, int row, int scalar);
 	void interchangeRows(int** matrix, int rows, int columns, int rowA, int rowB);
 	void addTwoRows(int** matrix, int rows, int columns, int rowA, int rowB);
 
-	void assignPivot();
-
-private:
-
-	void checkZeros();
+	// functions needed to help solve matrix
+	void assignPivot(int** matrix, int rows, int columns, int totalPivots);
+	bool checkZeros(int** matrix, int rows, int columns, int pivotRow);
 
 };
 

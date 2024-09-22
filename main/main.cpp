@@ -16,32 +16,17 @@ int main() {
 	GaussianElimination gaussianElimination;
 
 	createMatrix.setMatrixSize(3, 3);
-	//createMatrix.createCustomMatrix();
-	createMatrix.generateRandomMatrix();
+	createMatrix.createCustomMatrix();
 
-	gaussianElimination.printMatrix(createMatrix.getMatrix(), createMatrix.getRows(), createMatrix.getColumns());
+	int** matrix = createMatrix.getMatrix();
+	int totalRows = createMatrix.getRows();
+	int totalColumns = createMatrix.getColumns();
 
-	cout << endl << endl;
-
-	int rowA = 1;
-	int rowB = 3;
-
-	gaussianElimination.addTwoRows(createMatrix.getMatrix(), createMatrix.getRows(), createMatrix.getColumns(), rowA, rowB);
-
-//	int rowToMultiply = 2;
-//	int scalar = 5;
-//	gaussianElimination.multiplyRowByScalar(createMatrix.getMatrix(), createMatrix.getRows(), createMatrix.getColumns(), rowToMultiply, scalar);
-//	gaussianElimination.printMatrix(createMatrix.getMatrix(), createMatrix.getRows(), createMatrix.getColumns());
-//
-//	cout << endl << endl;
-//
-//	int rowA = 1;
-//	int rowB = 3;
-//	gaussianElimination.interchangeRows(createMatrix.getMatrix(), createMatrix.getRows(), createMatrix.getColumns(), rowA, rowB);
-//
-//	cout << endl << endl;
-//
-//	gaussianElimination.printMatrix(createMatrix.getMatrix(), createMatrix.getRows(), createMatrix.getColumns());
+	gaussianElimination.printMatrix(matrix, totalRows, totalColumns);
+	cout << endl;
+	gaussianElimination.solvingAlgorithm(matrix, totalRows, totalColumns);
+	cout << endl;
+	gaussianElimination.printMatrix(matrix, totalRows, totalColumns);
 
 	return  0;
 
