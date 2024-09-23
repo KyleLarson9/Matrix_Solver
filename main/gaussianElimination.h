@@ -26,7 +26,7 @@ private:
 
 	// functions needed to help solve matrix
 	void assignPivot(int** matrix, int rows, int columns, int totalPivots);
-	bool checkZeros(int** matrix, int rows, int columns, int pivotRow);
+	bool checkZeros(int** matrix, int rows, int columns, int pivotRow, int pivotColumn);
 
 };
 

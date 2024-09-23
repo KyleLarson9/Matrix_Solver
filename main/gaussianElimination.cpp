@@ -15,11 +15,24 @@ void GaussianElimination::solvingAlgorithm(int** matrix, int rows, int columns) 
 	// assign first pivot
 	int totalPivots = 0;
 	int currentPivotRow = 0;
+	int currentPivotColumn = 0;
 	assignPivot(matrix, rows, columns, totalPivots);
 
 	// check zeros underPivot
 	//    if all zeros, move pivot
-	bool allZerosUnderPivot = checkZeros(matrix, rows, columns, currentPivotRow);
+	bool allZerosUnderPivot = checkZeros(matrix, rows, columns, currentPivotRow, currentPivotColumn);
+
+	if(allZerosUnderPivot) {
+		// move pivot over
+		totalPivots++;
+		currentPivotRow++;
+		currentPivotColumn++;
+		assignPivot(matrix, rows, columns, totalPivots);
+		cout << "New pivot point is: " << matrix[currentPivotRow][currentPivotColumn];
+	} else {
+		cout << "Not all zeros under pivot";
+	}
+
 }
 
 
@@ -51,16 +64,24 @@ void GaussianElimination::assignPivot(int** matrix, int rows, int columns, int t
     }
 }
 
-bool GaussianElimination::checkZeros(int** matrix, int rows, int columns, int pivotRow) {
+bool GaussianElimination::checkZeros(int** matrix, int rows, int columns, int pivotRow, int pivotColumn) {
 
 	// return true if all element value under the current pivot are 0
 	bool allZeros = false;
-	int maximumZerosBelowPivot = rows - pivotRow;
+	int maximumZerosBelowPivot = rows - (pivotRow + 1);
+	int zeroCount = 0;
 
 	for(int i = pivotRow; i < rows; i++) {
+		int currentIndexValue = matrix[i][pivotColumn];
 
+		if(currentIndexValue == 0) {
+			zeroCount++;
+		}
 	}
 
+	if(zeroCount == maximumZerosBelowPivot) {
+		allZeros = true;
+	}
 	// idea: get pivot row, and subtract it from the total amount of rows
 	//    	 loop through each row and check the zeros in x column
 	//       if there are as many zeros as the total number of rows minus pivot row return true
