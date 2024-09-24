@@ -18,15 +18,11 @@ int main() {
 	createMatrix.setMatrixSize(3, 3);
 	createMatrix.createCustomMatrix();
 
-	int** matrix = createMatrix.getMatrix();
+	float** matrix = createMatrix.getMatrix();
 	int totalRows = createMatrix.getRows();
 	int totalColumns = createMatrix.getColumns();
 
-	gaussianElimination.printMatrix(matrix, totalRows, totalColumns);
-	cout << endl;
 	gaussianElimination.solvingAlgorithm(matrix, totalRows, totalColumns);
-	cout << endl;
-	gaussianElimination.printMatrix(matrix, totalRows, totalColumns);
 
 	return  0;
 

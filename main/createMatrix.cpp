@@ -23,9 +23,9 @@ void CreateMatrix::setMatrixSize(int r, int c) {
 	deallocateMatrix();
 
 	// allocate memory for matrix
-	matrix = new int*[rows];
+	matrix = new float*[rows];
 	for(int i = 0; i < rows; i++) {
-		matrix[i] = new int[columns];
+		matrix[i] = new float[columns];
 	}
 }
 
@@ -47,7 +47,7 @@ void CreateMatrix::createCustomMatrix() {
 	for(int i = 0; i < rows; i++) {
 		for(int j = 0; j < columns; j++) {
 
-			int currentElementValue;
+			float currentElementValue;
 
 			if(j == columns - 1) {
 				cout << "Enter solution for equation " << i + 1 << endl;
@@ -101,7 +101,7 @@ void CreateMatrix::checkIfNull() {
 
 // getters and setters
 
-int** CreateMatrix::getMatrix() {
+float** CreateMatrix::getMatrix() {
 	return matrix;
 }
 

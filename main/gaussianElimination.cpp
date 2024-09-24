@@ -10,39 +10,43 @@ using namespace std;
 
 // currently for matrices with 1 unique solution
 
-void GaussianElimination::solvingAlgorithm(int** matrix, int rows, int columns) {
+void GaussianElimination::solvingAlgorithm(float** matrix, int rows, int columns) {
+
+	// manual for now
 
 	// assign first pivot
 	int totalPivots = 0;
-	int currentPivotRow = 0;
-	int currentPivotColumn = 0;
+	int pivotRow = 0;
+	int pivotColumn = 0;
+
 	assignPivot(matrix, rows, columns, totalPivots);
 
-	// check zeros underPivot
-	//    if all zeros, move pivot
-	bool allZerosUnderPivot = checkZeros(matrix, rows, columns, currentPivotRow, currentPivotColumn);
+	cout << "Current pivot is: " << matrix[pivotRow][pivotColumn] << endl << endl;
+	printMatrix(matrix, rows, columns);
+	cout << endl;
+	// make value of current pivot 1 if not already
 
-	if(allZerosUnderPivot) {
-		// move pivot over
-		totalPivots++;
-		currentPivotRow++;
-		currentPivotColumn++;
-		assignPivot(matrix, rows, columns, totalPivots);
-		cout << "New pivot point is: " << matrix[currentPivotRow][currentPivotColumn];
-	} else {
-		cout << "Not all zeros under pivot";
+	if(matrix[pivotRow][pivotColumn] != 1) {
+		float currentPivot = matrix[pivotRow][pivotColumn];
+		float scalar = 1 / currentPivot;
+		cout << "Scalar is: " << scalar << endl;
+		multiplyRowByScalar(matrix, rows, columns, pivotRow, scalar);
 	}
+
+	printMatrix(matrix, rows, columns);
 
 }
 
 
-void GaussianElimination::assignPivot(int** matrix, int rows, int columns, int totalPivots) {
+void GaussianElimination::assignPivot(float** matrix, int rows, int columns, int totalPivots) {
     // assign current pivot
     int currentPivotRow = totalPivots;
     int currentPivotColumn = totalPivots;
     int currentPivot = matrix[currentPivotRow][currentPivotColumn];
 
-    if(currentPivot == 1) {
+
+
+    if(currentPivot == 1 || currentPivotRow > rows || currentPivotColumn > columns) {
     	return;
     }
 
@@ -62,16 +66,16 @@ void GaussianElimination::assignPivot(int** matrix, int rows, int columns, int t
     if(bestPivotRow != currentPivotRow) {
     	interchangeRows(matrix, rows, columns, currentPivotRow + 1, bestPivotRow + 1);
     }
+
 }
 
-bool GaussianElimination::checkZeros(int** matrix, int rows, int columns, int pivotRow, int pivotColumn) {
+bool GaussianElimination::checkZeros(float** matrix, int rows, int columns, int pivotRow, int pivotColumn) {
 
-	// return true if all element value under the current pivot are 0
 	bool allZeros = false;
 	int maximumZerosBelowPivot = rows - (pivotRow + 1);
 	int zeroCount = 0;
 
-	for(int i = pivotRow; i < rows; i++) {
+	for(int i = pivotRow + 1; i < rows; i++) {
 		int currentIndexValue = matrix[i][pivotColumn];
 
 		if(currentIndexValue == 0) {
@@ -82,26 +86,23 @@ bool GaussianElimination::checkZeros(int** matrix, int rows, int columns, int pi
 	if(zeroCount == maximumZerosBelowPivot) {
 		allZeros = true;
 	}
-	// idea: get pivot row, and subtract it from the total amount of rows
-	//    	 loop through each row and check the zeros in x column
-	//       if there are as many zeros as the total number of rows minus pivot row return true
 
 	return allZeros;
 }
 
 // elementary row operation functions
 
-void GaussianElimination::multiplyRowByScalar(int** matrix, int rows, int columns, int row, int scalar) {
+void GaussianElimination::multiplyRowByScalar(float** matrix, int rows, int columns, int row, float scalar) {
 
 	for(int j = 0; j < columns; j++) {
-		int currentElement = matrix[row - 1][j];
-		currentElement = matrix[row - 1][j] * scalar;
-		matrix[row - 1][j] = currentElement;
+		float currentElement = matrix[row][j];
+		currentElement = matrix[row][j] * scalar;
+		matrix[row][j] = currentElement;
 	}
 
 }
 
-void GaussianElimination::addTwoRows(int** matrix, int rows, int columns, int rowA, int rowB) {
+void GaussianElimination::addTwoRows(float** matrix, int rows, int columns, int rowA, int rowB) {
 
 	// will add rowA with rowB and replace rowB with the sum of the two rows
 
@@ -140,7 +141,7 @@ void GaussianElimination::addTwoRows(int** matrix, int rows, int columns, int ro
 }
 
 // painfully inefficient but its a start
-void GaussianElimination::interchangeRows(int** matrix, int rows, int columns, int rowA, int rowB) {
+void GaussianElimination::interchangeRows(float** matrix, int rows, int columns, int rowA, int rowB) {
 
 	int row1[columns];
 	int row2[columns];
@@ -176,7 +177,7 @@ void GaussianElimination::interchangeRows(int** matrix, int rows, int columns, i
 
 // printing
 
-void GaussianElimination::printMatrix(int** matrix, int rows, int columns) {
+void GaussianElimination::printMatrix(float** matrix, int rows, int columns) {
 
 	for(int i = 0; i < rows; i++) {
 		for(int j = 0; j < columns; j++) {
