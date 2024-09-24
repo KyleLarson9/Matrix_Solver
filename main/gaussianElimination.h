@@ -27,6 +27,8 @@ private:
 	// functions needed to help solve matrix
 	void assignPivot(float** matrix, int rows, int columns, int totalPivots);
 	bool checkZeros(float** matrix, int rows, int columns, int pivotRow, int pivotColumn);
+	float* getRowMultipliedByScalar(float** matrix, int rows, int columns, int row, float scalar); // returns array of row multiplied by scalar
+	void addTwoRowsWithGivenScalarRow(float** matrix, int rows, int columns, float* rowA, int rowB);
 
 };
 

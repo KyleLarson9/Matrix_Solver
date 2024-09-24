@@ -12,6 +12,8 @@ using namespace std;
 
 void GaussianElimination::solvingAlgorithm(float** matrix, int rows, int columns) {
 
+	printMatrix(matrix, rows, columns);
+		cout << endl << endl;
 	// manual for now
 
 	// assign first pivot
@@ -20,23 +22,89 @@ void GaussianElimination::solvingAlgorithm(float** matrix, int rows, int columns
 	int pivotColumn = 0;
 
 	assignPivot(matrix, rows, columns, totalPivots);
-
-	cout << "Current pivot is: " << matrix[pivotRow][pivotColumn] << endl << endl;
 	printMatrix(matrix, rows, columns);
-	cout << endl;
-	// make value of current pivot 1 if not already
+	cout << endl << endl;
 
+	// make value of current pivot 1 if not already
 	if(matrix[pivotRow][pivotColumn] != 1) {
 		float currentPivot = matrix[pivotRow][pivotColumn];
 		float scalar = 1 / currentPivot;
-		cout << "Scalar is: " << scalar << endl;
 		multiplyRowByScalar(matrix, rows, columns, pivotRow, scalar);
 	}
 
 	printMatrix(matrix, rows, columns);
+	cout << endl << endl;
 
+	// check zeros under pivot
+	//    If all elements under pivot are 0, move onto the next columns (swap pivot)
+	//    else start row operations
+	bool allZerosUnderPivot = checkZeros(matrix, rows, columns, pivotRow, pivotColumn);
+
+	if(allZerosUnderPivot) {
+		totalPivots++;
+		pivotRow++;
+		pivotColumn++;
+		assignPivot(matrix, rows, columns, totalPivots); // move to next pivot
+	} else { // start row operations
+
+		// find first non zero entry
+		int currentPivotValue = matrix[pivotRow][pivotColumn];
+
+		for(int i = pivotRow + 1; i < rows; i++) { // start from entry below current pivot
+
+			if(matrix[i][pivotColumn] != 0) {
+				int currentElementRow = i;
+				float currentElementValue = matrix[i][pivotColumn];
+				float* rowMultipliedByScalar = new float[columns];
+
+				// multiply currentPivot row by scalar according to value of currentElement
+				float scalar = - currentElementValue * currentPivotValue;
+
+				rowMultipliedByScalar = getRowMultipliedByScalar(matrix, rows, columns, pivotRow, scalar);
+				addTwoRowsWithGivenScalarRow(matrix, rows, columns, rowMultipliedByScalar, currentElementRow);
+				printMatrix(matrix, rows, columns);
+				cout << endl << endl;
+
+			}
+		}
+
+	}
 }
 
+void GaussianElimination::addTwoRowsWithGivenScalarRow(float** matrix, int rows, int columns, float* row1, int row2Number) {
+
+	float* row2 = new float[columns];
+	float* newRow = new float[columns];
+
+	// get row2
+	for(int j = 0; j < columns; j++) {
+		row2[j] = matrix[row2Number][j];
+	}
+
+	// add the two rows
+	for(int j = 0; j < columns; j++) {
+		newRow[j] = row1[j] + row2[j];
+	}
+
+	// implement new row into matrix
+	for(int j = 0; j < columns; j++) {
+		matrix[row2Number][j] = newRow[j];
+	}
+}
+
+float* GaussianElimination::getRowMultipliedByScalar(float** matrix, int rows, int columns, int row, float scalar) {
+	// return 1D array of row multiplied by scalar
+
+	float* rowMultipliedByScalar = new float[columns];
+
+	for(int j = 0; j < columns; j++) {
+		float currentElement = matrix[row][j];
+		currentElement = currentElement * scalar;
+		rowMultipliedByScalar[j] = currentElement;
+	}
+
+	return rowMultipliedByScalar;
+}
 
 void GaussianElimination::assignPivot(float** matrix, int rows, int columns, int totalPivots) {
     // assign current pivot
@@ -106,9 +174,9 @@ void GaussianElimination::addTwoRows(float** matrix, int rows, int columns, int 
 
 	// will add rowA with rowB and replace rowB with the sum of the two rows
 
-	int row1[columns];
-	int row2[columns];
-	int newRow[columns];
+	float row1[columns];
+	float row2[columns];
+	float newRow[columns];
 
 	// get values for each row in a 1D array
 	for(int i = 0; i < rows; i++) {
@@ -126,7 +194,7 @@ void GaussianElimination::addTwoRows(float** matrix, int rows, int columns, int 
 	// add the two rows
 
 	for(int i = 0; i < columns; i++) {
-		int sum = row1[i] + row2[i];
+		float sum = row1[i] + row2[i];
 		newRow[i] = sum;
 	}
 

@@ -16,7 +16,8 @@ int main() {
 	GaussianElimination gaussianElimination;
 
 	createMatrix.setMatrixSize(3, 3);
-	createMatrix.createCustomMatrix();
+	//createMatrix.createCustomMatrix();
+	createMatrix.generateRandomMatrix();
 
 	float** matrix = createMatrix.getMatrix();
 	int totalRows = createMatrix.getRows();
