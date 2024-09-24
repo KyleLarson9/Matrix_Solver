@@ -13,7 +13,7 @@ using namespace std;
 void GaussianElimination::solvingAlgorithm(float** matrix, int rows, int columns) {
 
 	printMatrix(matrix, rows, columns);
-		cout << endl << endl;
+	cout << endl << endl;
 	// manual for now
 
 	// assign first pivot
@@ -61,34 +61,13 @@ void GaussianElimination::solvingAlgorithm(float** matrix, int rows, int columns
 				float scalar = - currentElementValue * currentPivotValue;
 
 				rowMultipliedByScalar = getRowMultipliedByScalar(matrix, rows, columns, pivotRow, scalar);
-				addTwoRowsWithGivenScalarRow(matrix, rows, columns, rowMultipliedByScalar, currentElementRow);
+				addTwoRowsWithGivenRow(matrix, rows, columns, rowMultipliedByScalar, currentElementRow);
 				printMatrix(matrix, rows, columns);
 				cout << endl << endl;
 
 			}
 		}
 
-	}
-}
-
-void GaussianElimination::addTwoRowsWithGivenScalarRow(float** matrix, int rows, int columns, float* row1, int row2Number) {
-
-	float* row2 = new float[columns];
-	float* newRow = new float[columns];
-
-	// get row2
-	for(int j = 0; j < columns; j++) {
-		row2[j] = matrix[row2Number][j];
-	}
-
-	// add the two rows
-	for(int j = 0; j < columns; j++) {
-		newRow[j] = row1[j] + row2[j];
-	}
-
-	// implement new row into matrix
-	for(int j = 0; j < columns; j++) {
-		matrix[row2Number][j] = newRow[j];
 	}
 }
 
@@ -160,6 +139,27 @@ bool GaussianElimination::checkZeros(float** matrix, int rows, int columns, int 
 
 // elementary row operation functions
 
+void GaussianElimination::addTwoRowsWithGivenRow(float** matrix, int rows, int columns, float* row1, int row2Number) {
+
+	float* row2 = new float[columns];
+	float* newRow = new float[columns];
+
+	// get row2
+	for(int j = 0; j < columns; j++) {
+		row2[j] = matrix[row2Number][j];
+	}
+
+	// add the two rows
+	for(int j = 0; j < columns; j++) {
+		newRow[j] = row1[j] + row2[j];
+	}
+
+	// implement new row into matrix
+	for(int j = 0; j < columns; j++) {
+		matrix[row2Number][j] = newRow[j];
+	}
+}
+
 void GaussianElimination::multiplyRowByScalar(float** matrix, int rows, int columns, int row, float scalar) {
 
 	for(int j = 0; j < columns; j++) {
@@ -170,43 +170,7 @@ void GaussianElimination::multiplyRowByScalar(float** matrix, int rows, int colu
 
 }
 
-void GaussianElimination::addTwoRows(float** matrix, int rows, int columns, int rowA, int rowB) {
 
-	// will add rowA with rowB and replace rowB with the sum of the two rows
-
-	float row1[columns];
-	float row2[columns];
-	float newRow[columns];
-
-	// get values for each row in a 1D array
-	for(int i = 0; i < rows; i++) {
-		if(i + 1 == rowA) {
-			for(int j = 0; j < columns; j++) {
-				row1[j] = matrix[i][j];
-			}
-		} else if(i + 1 == rowB) {
-			for(int j = 0; j < columns; j++) {
-				row2[j] = matrix[i][j];
-			}
-		}
-	}
-
-	// add the two rows
-
-	for(int i = 0; i < columns; i++) {
-		float sum = row1[i] + row2[i];
-		newRow[i] = sum;
-	}
-
-	for(int i = 0; i < rows; i++) {
-		if(i + 1 == rowB) {
-			for(int j = 0; j < columns; j++) {
-				matrix[i][j] = newRow[j];
-			}
-		}
-	}
-
-}
 
 // painfully inefficient but its a start
 void GaussianElimination::interchangeRows(float** matrix, int rows, int columns, int rowA, int rowB) {
