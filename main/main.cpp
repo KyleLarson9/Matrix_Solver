@@ -15,7 +15,7 @@ int main() {
 	CreateMatrix createMatrix;
 	GaussianElimination gaussianElimination;
 
-	createMatrix.setMatrixSize(3, 3);
+	createMatrix.setMatrixSize(3, 4);
 	//createMatrix.createCustomMatrix();
 	createMatrix.generateRandomMatrix();
 
@@ -23,7 +23,11 @@ int main() {
 	int totalRows = createMatrix.getRows();
 	int totalColumns = createMatrix.getColumns();
 
+	gaussianElimination.printMatrix(matrix, totalRows, totalColumns);
 	gaussianElimination.solvingAlgorithm(matrix, totalRows, totalColumns);
+
+	gaussianElimination.printMatrix(matrix, totalRows, totalColumns);
+
 
 	return  0;
 

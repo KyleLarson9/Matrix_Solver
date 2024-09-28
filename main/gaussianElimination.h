@@ -9,14 +9,14 @@
 #define GAUSSIANELIMINATION_H_
 
 #include <iostream>
-
+#include <algorithm>
 class GaussianElimination {
 
 public:
 
 	void solvingAlgorithm(float** matrix, int rows, int columns);
 	void printMatrix(float** matrix, int rows, int columns);
-
+	void printFractionMatrix(float** matrix, int rows, int columns);
 private:
 
 	// elementary row operation functions
