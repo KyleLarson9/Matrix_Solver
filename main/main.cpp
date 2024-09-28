@@ -24,16 +24,10 @@ int main() {
 	int totalColumns = createMatrix.getColumns();
 
 	gaussianElimination.printMatrix(matrix, totalRows, totalColumns);
-<<<<<<< HEAD
-	gaussianElimination.solvingAlgorithm(matrix, totalRows, totalColumns);
-
-	gaussianElimination.printMatrix(matrix, totalRows, totalColumns);
-=======
 
 	float** rrefMatrix = gaussianElimination.reducedRowEchelonForm(matrix, totalRows, totalColumns);
 
 	gaussianElimination.printMatrix(rrefMatrix, totalRows, totalColumns);
->>>>>>> 1e6fd27 (Added reduced row echelon form for matrices)
 
 
 	return  0;
