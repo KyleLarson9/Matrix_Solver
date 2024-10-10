@@ -8,8 +8,16 @@
 #ifndef MATRIXPROPERTIES_MATRIXPROPERTIES_H_
 #define MATRIXPROPERTIES_MATRIXPROPERTIES_H_
 
+class MatrixProperties {
+
+public:
+
+	bool isSingular();
+
+private:
 
 
+};
 
 
 #endif /* MATRIXPROPERTIES_MATRIXPROPERTIES_H_ */

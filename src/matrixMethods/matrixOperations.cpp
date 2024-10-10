@@ -5,6 +5,15 @@
  *      Author: kylel
  */
 
+#include "matrixOperations.h"
+
+float MatrixOperations::determinant(float** matrix, int rows, int columns) {
+
+	float determinant = 44;
 
 
+
+	return determinant;
+
+}
 

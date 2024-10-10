@@ -32,7 +32,8 @@ private:
 	void findBestPivot(float** matrix, int rows, int columns, int totalPivots);
 	float* getRowMultipliedByScalar(float** matrix, int rows, int columns, int row, float scalar); // returns array of row multiplied by scalar
 	bool checkZeros(float** matrix, int rows, int columns, int pivotColumn);
-
+	void normalizePivotRow(float** matrix, int rows, int columns, int pivotRow, int pivotColumn);
+	void eliminateColumn(float** matrix, int rows, int columns, int pivotRow, int pivotColumn, float* rowMultipliedByScalar);
 };
 
 #endif /* GAUSSIANELIMINATION_H_ */

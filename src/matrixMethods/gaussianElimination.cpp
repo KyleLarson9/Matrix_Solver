@@ -8,10 +8,6 @@
 #include "gaussianElimination.h"
 using namespace std;
 
-// doesn't take into account all zero column -- it would  need to skip row for pivots
-// doesn't work for extremely small float values (it won't do anything)
-// doesn't work for free variables
-
 float** GaussianElimination::reducedRowEchelonForm(float** matrix, int rows, int columns) {
 
 	int pivotColumn = 0;
@@ -24,11 +20,7 @@ float** GaussianElimination::reducedRowEchelonForm(float** matrix, int rows, int
 		findBestPivot(matrix, rows, columns, pivotColumn);
 
 		// normalize pivot
-		float currentPivot = matrix[pivotColumn][pivotRow];
-		if(currentPivot != 1) {
-			float scalar = 1 / currentPivot;
-			multiplyRowByScalar(matrix, rows, columns, pivotRow, scalar);
-		}
+		normalizePivotRow(matrix, rows, columns, pivotRow, pivotColumn);
 
 		if(checkZeros(matrix, rows, columns, pivotRow)) { // if all zeros except for column increment pivot
 			// check if it is an all zero column
@@ -39,13 +31,7 @@ float** GaussianElimination::reducedRowEchelonForm(float** matrix, int rows, int
 
 			// starting from first non zero element, destroy that element with pivot (skipping over pivot of course
 
-			for(int i = 0; i < rows; i++) {
-				if(i != pivotRow && matrix[i][pivotColumn] != 0) {
-					float scalar = - matrix[i][pivotColumn];
-					rowMultipliedByScalar = getRowMultipliedByScalar(matrix, rows, columns, pivotRow, scalar);
-					addTwoRowsWithGivenRow(matrix, rows, columns, rowMultipliedByScalar, i);
-				}
-			}
+			eliminateColumn(matrix, rows, columns, pivotRow, pivotColumn, rowMultipliedByScalar);
 			pivotRow++;
 			pivotColumn++;
 		}
@@ -53,6 +39,24 @@ float** GaussianElimination::reducedRowEchelonForm(float** matrix, int rows, int
 	delete[] rowMultipliedByScalar;
 
 	return matrix;
+}
+
+void GaussianElimination::eliminateColumn(float** matrix, int rows, int columns, int pivotRow, int pivotColumn, float* rowMultipliedByScalar) {
+	for(int i = 0; i < rows; i++) {
+		if(i != pivotRow && matrix[i][pivotColumn] != 0) {
+			float scalar = - matrix[i][pivotColumn];
+			rowMultipliedByScalar = getRowMultipliedByScalar(matrix, rows, columns, pivotRow, scalar);
+			addTwoRowsWithGivenRow(matrix, rows, columns, rowMultipliedByScalar, i);
+		}
+	}
+}
+
+void GaussianElimination::normalizePivotRow(float** matrix, int rows, int columns, int pivotRow, int pivotColumn) {
+	float currentPivot = matrix[pivotColumn][pivotRow];
+			if(currentPivot != 1) {
+				float scalar = 1 / currentPivot;
+				multiplyRowByScalar(matrix, rows, columns, pivotRow, scalar);
+			}
 }
 
 bool GaussianElimination::checkZeros(float** matrix, int rows, int columns, int pivotColumn) {
@@ -92,7 +96,7 @@ void GaussianElimination::findBestPivot(float** matrix, int rows, int columns, i
     // assign current pivot
     int currentPivotRow = totalPivots;
     int currentPivotColumn = totalPivots;
-    int currentPivot = matrix[currentPivotRow][currentPivotColumn];
+    float currentPivot = matrix[currentPivotRow][currentPivotColumn];
 
     if(currentPivot == 1 || currentPivotRow > rows || currentPivotColumn > columns) {
     	return;
